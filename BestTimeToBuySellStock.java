@@ -5,51 +5,59 @@ import java.util.Arrays;
 
 
 /**
- * 
+ * LeetCode 121. Best Time to Buy and Sell Stock
+ * https://leetcode.com/problems/best-time-to-buy-and-sell-stock/
  */
 public class BestTimeToBuySellStock {
 
 
     /**
+     * Return the maximum profit you can achieve from this transaction.
+     * If you cannot achieve any profit, return 0.
+     * 
      * Track min price (when to buy).
      * Track max profit (when to sell).
-     * O(n)
+     * 
+     * Runtime: 1 ms, faster than 98.84% of Java online submissions.
+     * Memory Usage: 51.7 MB, less than 53.59% of Java online submissions.
+     * 
+     * Execution: O(n)
      */
     static int maxProfit(int[] prices) {
 
-        // **** sanity check(s) ****
-        if (prices.length == 0)
+        // **** perform sanity check(s) ****
+        if (prices.length < 2)
             return 0;
-            
+
         // **** initialization ****
         int maxProfit   = 0;
-        int minPrice    = Integer.MAX_VALUE;
+        int minPrice    = prices[0];
 
-        // **** traverse the array of prices ****
-        for (int i = 0; i < prices.length; i++) {
+        // **** traverse the array of prices - O(n)****
+        for (int i = 1; i < prices.length; i++) {
 
-            // **** look for the min stock price (when to buy) ****
-            if (prices[i] < minPrice) {
+            // **** look for the min stock price (when to BUY) ****
+            if (prices[i] < minPrice)
                 minPrice = prices[i];
-            }
 
-            // **** compute max profit (when to sell) ****
-            else {
-                maxProfit = Math.max(maxProfit, prices[i] - minPrice);
-            }
+            // **** compute max profit (when to SELL) ****
+            else if (prices[i] - minPrice > maxProfit)
+                maxProfit = prices[i] - minPrice;
 
             // ???? ????
-            // System.out.println( "<<< i: " + i + " minPrice: " + minPrice + 
-            //                     " maxProfit: " + maxProfit);
+            System.out.println( "maxProfit <<< i: " + i + " minPrice: " + minPrice + 
+                                " maxProfit: " + maxProfit);
         }
 
-        // **** return profit ****
+        // **** return max profit ****
         return maxProfit;
     }
 
 
     /**
      * Test scaffolding
+     * 
+     * !!!! NOT PART OF THE SOLUTION !!!!
      * 
      * @throws IOException
      */
@@ -72,7 +80,7 @@ public class BestTimeToBuySellStock {
         // ???? ????
         System.out.println("main <<< prices: " + Arrays.toString(prices));
 
-        // **** compute and display the day to sell ****
+        // **** compute and display the max profit ****
         System.out.println("main <<< profit: " + maxProfit(prices));
     }
 }
